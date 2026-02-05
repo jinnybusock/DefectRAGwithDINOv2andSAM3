@@ -7,7 +7,7 @@ import torchvision.transforms as T
 from scipy.ndimage import label  # 보완점: 객체 분리 로직용
 
 
-def get_multiple_defect_boxes(image_path, model_dinov2, device="cuda", threshold_q=0.97):
+def get_multiple_defect_boxes(image_path, model_dinov2, device="cuda", threshold_q=0.90):
     # 1. 이미지 전처리
     img = Image.open(image_path).convert("RGB")
     orig_w, orig_h = img.size
