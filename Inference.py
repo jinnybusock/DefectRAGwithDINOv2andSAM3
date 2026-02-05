@@ -22,7 +22,17 @@ print("모델 로딩 중...")
 print("=" * 70)
 
 # DINOv2 모델
+device= "cuda" if torch.cuda.is_available() else "cpu"
 model_dinov2 = torch.hub.load('facebookresearch/dinov2', 'dinov2_vitl14').to(device)
+
+# 학습된 대조 학습 가중치 로드
+trained_weights = "dinov2_semicon_contrastive.pt"
+if os.path.exists(trained_weights):
+    model_dinov2.load_state_dict(torch.load(trained_weights, map_location=device))
+    print(f"🔥 대조 학습 가중치({trained_weights}) 로드 완료!")
+else:
+    print("⚠️ 학습된 가중치가 없어 기본 DINOv2 모델을 사용합니다.")
+
 model_dinov2.eval()
 print("✓ DINOv2 모델 로드 완료!")
 
